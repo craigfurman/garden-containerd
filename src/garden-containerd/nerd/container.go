@@ -10,11 +10,12 @@ import (
 )
 
 type Container struct {
-	ctr containerd.Container
+	ctr    containerd.Container
+	handle string
 }
 
 func (c *Container) Handle() string {
-	return ""
+	return c.handle
 }
 
 func (c *Container) Stop(kill bool) error {
@@ -59,10 +60,6 @@ func (c *Container) NetOut(netOutRule garden.NetOutRule) error {
 
 func (c *Container) BulkNetOut(netOutRules []garden.NetOutRule) error {
 	return nil
-}
-
-func (c *Container) Run(garden.ProcessSpec, garden.ProcessIO) (garden.Process, error) {
-	return nil, nil
 }
 
 func (c *Container) Attach(processID string, io garden.ProcessIO) (garden.Process, error) {

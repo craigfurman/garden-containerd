@@ -16,13 +16,10 @@ log() {
 
 case "$1" in
   start)
-    # TODO needed?
-    export PATH=/var/vcap/packages/btrfs-progs/bin:$PATH
-
+    export PATH=/var/vcap/packages/containerd/bin:$PATH
     log "starting containerd..."
     echo $$ > $nerd_pid
-    exec /var/vcap/packages/containerd/bin/containerd \
-      >>$nerd_log 2>&1
+    exec containerd >>$nerd_log 2>&1
     ;;
 
   stop)

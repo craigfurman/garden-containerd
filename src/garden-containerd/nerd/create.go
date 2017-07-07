@@ -1,11 +1,8 @@
 package nerd
 
 import (
-	"context"
-
 	"code.cloudfoundry.org/garden"
 	"github.com/containerd/containerd"
-	"github.com/containerd/containerd/namespaces"
 	"github.com/pborman/uuid"
 )
 
@@ -14,9 +11,7 @@ func (g *Garden) Create(spec garden.ContainerSpec) (garden.Container, error) {
 		spec.Handle = uuid.New()
 	}
 
-	ctx := context.Background()
-	ns := namespaces.WithNamespace(ctx, "garden")
-
+	ns := namespace()
 	image, err := g.Containerd.Pull(ns, spec.Image.URI, containerd.WithPullUnpack)
 	if err != nil {
 		g.Logger.Println(err)
@@ -25,6 +20,7 @@ func (g *Garden) Create(spec garden.ContainerSpec) (garden.Container, error) {
 
 	ociSpec, err := containerd.GenerateSpec(
 		containerd.WithImageConfig(ns, image),
+		containerd.WithProcessArgs("sleep", "3600"),
 	)
 
 	if err != nil {
@@ -41,6 +37,9 @@ func (g *Garden) Create(spec garden.ContainerSpec) (garden.Container, error) {
 		g.Logger.Println(err)
 		return nil, err
 	}
+	gdnCtr := &Container{ctr: ctr, handle: spec.Handle}
 
-	return &Container{ctr: ctr}, nil
+	g.containers[spec.Handle] = gdnCtr
+
+	return gdnCtr, nil
 }

@@ -31,7 +31,7 @@ func main() {
 	mustNot("connecting containerd client", err)
 	defer containerdClient.Close()
 
-	nerd := &nerd.Garden{Containerd: containerdClient, Logger: log.New(os.Stdout, "[nerd] ", log.LstdFlags)}
+	nerd := nerd.New(containerdClient, log.New(os.Stdout, "[nerd] ", log.LstdFlags))
 
 	lagerLogger := lager.NewLogger("garden-containerd")
 	lagerLogger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
