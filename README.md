@@ -18,3 +18,8 @@ For example:
 gaol create -r 'docker.io/library/busybox:latest' -n test
 gaol run test -a -c '/bin/echo hi'
 ```
+
+The bosh blobs are checked in here because it's a hack day and life's too short
+to get an S3 bucket for that. The version of runc in there is built from
+51b501dab1889ca609db9c536ac976f0f53e7021, the latest commit as of today
+(7/7/17).

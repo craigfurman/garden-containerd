@@ -17,6 +17,7 @@ log() {
 case "$1" in
   start)
     export PATH=/var/vcap/packages/containerd/bin:$PATH
+    export PATH=/var/vcap/packages/runc/bin:$PATH
     log "starting containerd..."
     echo $$ > $nerd_pid
     exec containerd >>$nerd_log 2>&1

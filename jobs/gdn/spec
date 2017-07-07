@@ -8,6 +8,7 @@ templates:
 packages:
 - gdn
 - containerd
+- runc
 - btrfs-progs
 
 properties: {}

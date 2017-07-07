@@ -1,0 +1,4 @@
+set -euo pipefail
+
+mkdir -p $BOSH_INSTALL_TARGET/bin
+mv runc $BOSH_INSTALL_TARGET/bin/
