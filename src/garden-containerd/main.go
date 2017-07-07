@@ -33,11 +33,13 @@ func main() {
 
 	nerd := &nerd.Garden{Containerd: containerdClient, Logger: log.New(os.Stdout, "[nerd] ", log.LstdFlags)}
 
+	lagerLogger := lager.NewLogger("garden-containerd")
+	lagerLogger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 	gardenServer := server.New(
 		"tcp", "0.0.0.0:7777",
 		time.Minute,
 		nerd,
-		lager.NewLogger("garden-containerd"),
+		lagerLogger,
 	)
 
 	fmt.Println("starting...")
