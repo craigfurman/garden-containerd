@@ -1,0 +1,13 @@
+---
+name: gdn
+
+templates:
+  ctl.sh.erb: bin/ctl
+  nerd.sh.erb: bin/nerd_ctl
+
+packages:
+- gdn
+- containerd
+- btrfs-progs
+
+properties: {}

@@ -1,0 +1,7 @@
+---
+name: containerd
+dependencies:
+- go
+- btrfs-progs
+files:
+- github.com/containerd/containerd/**/*

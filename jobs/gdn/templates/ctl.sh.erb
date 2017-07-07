@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+log_dir=/var/vcap/sys/log/gdn
+gdn_log=$log_dir/gdn.log
+ctl_log=$log_dir/ctl.log
+
+pid_dir=/var/vcap/sys/run/gdn
+gdn_pid=$pid_dir/gdn.pid
+
+mkdir -p "$log_dir" $pid_dir
+
+log() {
+  echo "$(date): $1" >> $ctl_log
+}
+
+case "$1" in
+  start)
+    log "starting gdn..."
+    /var/vcap/packages/gdn/bin/garden-containerd \
+      --pidfile $gdn_pid \
+      >>$gdn_log 2>&1
+    ;;
+
+  stop)
+    log "stopping gdn..."
+    kill "$(cat $gdn_pid)"
+    rm $gdn_pid
+    ;;
+
+  *)
+    log "invalid argument $1"
+    ;;
+esac

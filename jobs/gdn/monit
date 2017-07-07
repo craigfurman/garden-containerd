@@ -1,0 +1,11 @@
+check process nerd
+  with pidfile /var/vcap/sys/run/gdn/nerd.pid
+  start program "/var/vcap/jobs/gdn/bin/nerd_ctl start"
+  stop program "/var/vcap/jobs/gdn/bin/nerd_ctl stop"
+  group vcap
+check process gdn
+  with pidfile /var/vcap/sys/run/gdn/gdn.pid
+  start program "/var/vcap/jobs/gdn/bin/ctl start"
+  stop program "/var/vcap/jobs/gdn/bin/ctl stop"
+  group vcap
+  depends on nerd

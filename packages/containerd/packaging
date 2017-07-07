@@ -1,0 +1,13 @@
+set -euo pipefail
+
+export LIBRARY_PATH=/var/vcap/packages/btrfs-progs/include
+export C_INCLUDE_PATH=/var/vcap/packages/btrfs-progs/include
+
+export GOROOT=/var/vcap/packages/go
+export PATH=$GOROOT/bin:$PATH
+export GOPATH=$BOSH_INSTALL_TARGET
+
+mkdir -p $GOPATH/src
+cp -a github.com $GOPATH/src/github.com
+go install github.com/containerd/containerd/cmd/containerd
+rm -rf $GOPATH/{src,pkg}

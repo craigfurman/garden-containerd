@@ -1,0 +1,31 @@
+name: nerd
+
+director_uuid: 63ddb6a6-d6fe-40e1-b16b-2ff6b2034c79
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: latest
+
+releases:
+- name: garden-containerd
+  version: latest
+
+instance_groups:
+- name: nerd
+  jobs:
+  - name: gdn
+    release: garden-containerd
+    properties: {}
+  instances: 1
+  vm_type: container
+  networks:
+  - name: lite
+  azs: [lite]
+  stemcell: trusty
+
+update:
+  canaries: 1
+  canary_watch_time: 1000 - 60000
+  max_in_flight: 1
+  update_watch_time: 1000 - 60000

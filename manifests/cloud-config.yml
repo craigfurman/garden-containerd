@@ -1,0 +1,22 @@
+vm_types:
+- name: container
+
+disk_types: []
+
+azs:
+- name: lite
+
+networks:
+- name: lite
+  type: manual
+  subnets:
+  - range: 10.244.1.0/24
+    gateway: 10.244.1.1
+    az: lite
+
+compilation:
+  workers: 10
+  reuse_compilation_vms: true
+  az: lite
+  network: lite
+  vm_type: container
