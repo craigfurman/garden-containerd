@@ -6,6 +6,5 @@ export GOPATH=$BOSH_INSTALL_TARGET
 
 mkdir -p $GOPATH/src
 cp -a garden-containerd $GOPATH/src/
-cp -a github.com $GOPATH/src/
 go install garden-containerd
 rm -rf $GOPATH/{src,pkg}

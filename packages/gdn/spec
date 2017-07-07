@@ -3,4 +3,3 @@ name: gdn
 dependencies: [go]
 files:
 - garden-containerd/**/*
-- github.com/containerd/containerd/**/*

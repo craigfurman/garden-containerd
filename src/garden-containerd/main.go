@@ -4,10 +4,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"garden-containerd/nerd"
 	"io/ioutil"
 	"os"
 	"time"
 
+	"code.cloudfoundry.org/garden/server"
+	"code.cloudfoundry.org/lager"
 	"github.com/containerd/containerd"
 )
 
@@ -27,8 +30,20 @@ func main() {
 	mustNot("connecting containerd client", err)
 	defer containerdClient.Close()
 
-	// stopgap to test bosh deployment
-	time.Sleep(time.Hour)
+	nerd := &nerd.Garden{}
+
+	gardenServer := server.New(
+		"tcp", "0.0.0.0:7777",
+		time.Minute,
+		nerd,
+		lager.NewLogger("garden-containerd"),
+	)
+
+	fmt.Println("starting...")
+	must("starting garden server", gardenServer.Start())
+	fmt.Println("started...")
+	block := make(chan struct{})
+	<-block
 }
 
 func must(action string, err error) {
