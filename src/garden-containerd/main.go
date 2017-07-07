@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"garden-containerd/nerd"
 	"io/ioutil"
+	"log"
 	"os"
 	"time"
 
@@ -30,7 +31,7 @@ func main() {
 	mustNot("connecting containerd client", err)
 	defer containerdClient.Close()
 
-	nerd := &nerd.Garden{}
+	nerd := &nerd.Garden{Containerd: containerdClient, Logger: log.New(os.Stdout, "[nerd] ", log.LstdFlags)}
 
 	gardenServer := server.New(
 		"tcp", "0.0.0.0:7777",

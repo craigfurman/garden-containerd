@@ -1,12 +1,18 @@
 package nerd
 
 import (
+	"log"
 	"time"
+
+	"github.com/containerd/containerd"
 
 	"code.cloudfoundry.org/garden"
 )
 
-type Garden struct{}
+type Garden struct {
+	Containerd *containerd.Client
+	Logger     *log.Logger
+}
 
 func (g *Garden) Ping() error {
 	return nil
@@ -14,10 +20,6 @@ func (g *Garden) Ping() error {
 
 func (g *Garden) Capacity() (garden.Capacity, error) {
 	return garden.Capacity{}, nil
-}
-
-func (g *Garden) Create(spec garden.ContainerSpec) (garden.Container, error) {
-	return nil, nil
 }
 
 func (g *Garden) Destroy(handle string) error {
